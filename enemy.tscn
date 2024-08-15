@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://dgwtev2fb0aa3"]
+
+[ext_resource type="Texture2D" uid="uid://bpovpdg4c5d1x" path="res://art/enemies/DeathSlime.png" id="1_0uqtn"]
+[ext_resource type="Script" path="res://enemy.gd" id="1_tu8kg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j1w8u"]
+atlas = ExtResource("1_0uqtn")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cvb0f"]
+atlas = ExtResource("1_0uqtn")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lnmnp"]
+atlas = ExtResource("1_0uqtn")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sa8ug"]
+atlas = ExtResource("1_0uqtn")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b8s1j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j1w8u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cvb0f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lnmnp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sa8ug")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ahc7j"]
+radius = 5.60357
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+scale = Vector2(5, 5)
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_tu8kg")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -4.2)
+sprite_frames = SubResource("SpriteFrames_b8s1j")
+frame_progress = 0.374223
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1.4)
+shape = SubResource("CircleShape2D_ahc7j")

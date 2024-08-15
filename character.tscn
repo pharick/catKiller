@@ -1,0 +1,151 @@
+[gd_scene load_steps=20 format=3 uid="uid://c54a3e3qyafxx"]
+
+[ext_resource type="Texture2D" uid="uid://7tbrpfnqwtns" path="res://art/character/Meow-Knight_Idle.png" id="1_f077h"]
+[ext_resource type="Script" path="res://character.gd" id="1_fmxam"]
+[ext_resource type="Texture2D" uid="uid://b8svkdx0k2dnc" path="res://art/character/Meow-Knight_Run.png" id="3_pyhtf"]
+[ext_resource type="PackedScene" uid="uid://cbch84qpqqah2" path="res://gun.tscn" id="4_86fs4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ufsdl"]
+atlas = ExtResource("1_f077h")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_55lra"]
+atlas = ExtResource("1_f077h")
+region = Rect2(0, 26, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gcyxr"]
+atlas = ExtResource("1_f077h")
+region = Rect2(0, 52, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tkrkp"]
+atlas = ExtResource("1_f077h")
+region = Rect2(0, 78, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yah8h"]
+atlas = ExtResource("1_f077h")
+region = Rect2(0, 104, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxxrc"]
+atlas = ExtResource("1_f077h")
+region = Rect2(0, 130, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebkep"]
+atlas = ExtResource("3_pyhtf")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sok1i"]
+atlas = ExtResource("3_pyhtf")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pjvxd"]
+atlas = ExtResource("3_pyhtf")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vnq10"]
+atlas = ExtResource("3_pyhtf")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o3ave"]
+atlas = ExtResource("3_pyhtf")
+region = Rect2(0, 64, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8kagk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ufsdl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_55lra")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gcyxr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tkrkp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yah8h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bxxrc")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebkep")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sok1i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pjvxd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vnq10")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o3ave")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gwppt"]
+radius = 6.0
+height = 12.8571
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gmvoa"]
+radius = 7.00583
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b3xqn"]
+bg_color = Color(0.433663, 0.829649, 0.242223, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Character" type="CharacterBody2D"]
+position = Vector2(0, 1)
+scale = Vector2(7, 7)
+script = ExtResource("1_fmxam")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_8kagk")
+animation = &"idle"
+frame_progress = 0.513994
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.285714, 1.28571)
+shape = SubResource("CapsuleShape2D_gwppt")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Gun" parent="." instance=ExtResource("4_86fs4")]
+position = Vector2(0.142857, 0.857143)
+rotation = -0.0221161
+
+[node name="HurtBox" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0.285714, 1.28571)
+shape = SubResource("CircleShape2D_gmvoa")
+debug_color = Color(0.921925, 0.177896, 0.538396, 0.42)
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+offset_left = -8.0
+offset_top = -11.1429
+offset_right = 158.0
+offset_bottom = 15.8571
+scale = Vector2(0.1, 0.1)
+theme_override_styles/fill = SubResource("StyleBoxFlat_b3xqn")
+value = 100.0

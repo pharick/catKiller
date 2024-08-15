@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://cg07x4t3k0qs4"]
+
+[ext_resource type="Texture2D" uid="uid://cc31umgnqvcpm" path="res://art/obstacles.png" id="1_01j26"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tjthk"]
+atlas = ExtResource("1_01j26")
+region = Rect2(0, 128, 63, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nvix4"]
+atlas = ExtResource("1_01j26")
+region = Rect2(64, 128, 63, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oumxx"]
+atlas = ExtResource("1_01j26")
+region = Rect2(128, 128, 63, 63)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vbmfp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjthk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nvix4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oumxx")
+}],
+"loop": true,
+"name": &"bounce",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0w87q"]
+size = Vector2(17.0833, 11.5556)
+
+[node name="Obstacle" type="StaticBody2D"]
+scale = Vector2(4, 4)
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-2.77778, -3.88889)
+sprite_frames = SubResource("SpriteFrames_vbmfp")
+animation = &"bounce"
+frame_progress = 0.0672778
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.208336, 4.77778)
+shape = SubResource("RectangleShape2D_0w87q")

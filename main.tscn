@@ -1,0 +1,98 @@
+[gd_scene load_steps=5 format=3 uid="uid://bt3aonud3plnd"]
+
+[ext_resource type="PackedScene" uid="uid://c54a3e3qyafxx" path="res://character.tscn" id="1_bjbrk"]
+[ext_resource type="Script" path="res://main.gd" id="1_td3kc"]
+[ext_resource type="PackedScene" uid="uid://cg07x4t3k0qs4" path="res://obstacle.tscn" id="2_lkpc0"]
+
+[sub_resource type="Curve2D" id="Curve2D_y14hx"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -208, -118, 0, 0, 0, 0, 1124, -117, 0, 0, 0, 0, 1126, 820, 0, 0, 0, 0, -201, 826, 0, 0, 0, 0, -207, -117)
+}
+point_count = 5
+
+[node name="Main" type="Node2D"]
+y_sort_enabled = true
+position = Vector2(50, 48)
+script = ExtResource("1_td3kc")
+metadata/_edit_group_ = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -100
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+custom_minimum_size = Vector2(1024, 768)
+offset_right = 1024.0
+offset_bottom = 768.0
+color = Color(0.764706, 0.956863, 0.913725, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Character" parent="." instance=ExtResource("1_bjbrk")]
+position = Vector2(461, 339)
+
+[node name="Path2D" type="Path2D" parent="Character"]
+position = Vector2(-65.8571, -48.4286)
+scale = Vector2(0.142857, 0.142857)
+curve = SubResource("Curve2D_y14hx")
+
+[node name="SpawnEnemiesPathFollow" type="PathFollow2D" parent="Character/Path2D"]
+unique_name_in_owner = true
+position = Vector2(-208, -118)
+rotation = 0.000750751
+
+[node name="Obstacle" parent="." instance=ExtResource("2_lkpc0")]
+position = Vector2(160, 142)
+
+[node name="Obstacle2" parent="." instance=ExtResource("2_lkpc0")]
+position = Vector2(822, 156)
+
+[node name="Obstacle3" parent="." instance=ExtResource("2_lkpc0")]
+position = Vector2(280, 504)
+
+[node name="Obstacle4" parent="." instance=ExtResource("2_lkpc0")]
+position = Vector2(734, 419)
+
+[node name="Obstacle5" parent="." instance=ExtResource("2_lkpc0")]
+position = Vector2(612, 68)
+
+[node name="Obstacle6" parent="." instance=ExtResource("2_lkpc0")]
+position = Vector2(858, 667)
+
+[node name="Obstacle7" parent="." instance=ExtResource("2_lkpc0")]
+position = Vector2(85, 679)
+
+[node name="SpawnEnemyTimer" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
+
+[node name="GameOverLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="GameOverLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.752941)
+
+[node name="Label" type="Label" parent="GameOverLayer/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.5
+offset_top = -11.5
+offset_right = 43.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.962524, 0.497098, 0.62746, 1)
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 58
+text = "Game Over"
+
+[connection signal="death" from="Character" to="." method="_on_character_death"]
+[connection signal="timeout" from="SpawnEnemyTimer" to="." method="_on_spawn_enemy_timer_timeout"]
